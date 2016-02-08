@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular Currency Format</title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-currency-format/dist/currency-format.js"></script>
+    <script>
+        angular.module('app', ['currencyFormat'])
+                .controller('currencyCtrl', ['$scope', 'currencyFormatService', function ($scope, currencyFormatService) {
+                    $scope.amount = -1234.567;
+                    $scope.selectedCurrencyCode = 'USD';
+                    $scope.fractionSize = 0;
+
+                    $scope.currencies = currencyFormatService.getAll();
+
+                    $scope.$watchCollection('[amount, selectedCurrencyCode, fractionSize]', function () {
+                        $scope.currencyInfo = currencyFormatService.getByCode($scope.selectedCurrencyCode);
+                    });
+                }]);
+    </script>
+</head>
+<body ng-app="app" ng-controller="currencyCtrl">
+    <input type="text" ng-model="amount">
+    <select ng-model="selectedCurrencyCode">
+        <option ng-repeat="(code, currency) in currencies" value="{{code}}" ng-selected="{{code === selectedCurrencyCode}}">
+            {{code}}: {{currency.name}} {{!!currency.uniqSymbol && !!currency.uniqSymbol.grapheme ? '(' +
+            currency.uniqSymbol.grapheme + ')': ''}}
+        </option>
+    </select>
+    <br>
+    <br>
+    Currency info:<br>
+    <code>{{currencyInfo}}</code>
+    <br>
+    <br>
+    Formated currency:<br>
+    <span ng-bind-html="amount | currencyFormat:selectedCurrencyCode"></span><br>
+    <br>
+    Formated currency with custom fraction size <input type="text" ng-model="fractionSize">:<br>
+    <span ng-bind-html="amount | currencyFormat:selectedCurrencyCode:fractionSize"></span>
+</body>
+</html>
