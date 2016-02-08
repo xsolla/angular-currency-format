@@ -1,7 +1,5 @@
 # Angular Currency Format
 
-[![Bower package](https://badge.fury.io/bo/angular-currency-format.svg)](https://badge.fury.io/bo/angular-currency-format)
-
 This project is module for AngularJS. It provides:
 
 - A service (factory) that retrieves currency information (name, symbol, fraction and formating) according to ISO 4217 currency codes
