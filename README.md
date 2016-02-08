@@ -5,7 +5,7 @@
 This project is module for AngularJS. It provides:
 
 - A service (factory) that retrieves currency information (name, symbol, fraction and formating) according to ISO 4217 currency codes
-- A filter to print formatted currency (100 USD -> -$100.00)
+- A filter to print formatted currency (-100 USD -> -$100.00)
 
 ## Installation
 
