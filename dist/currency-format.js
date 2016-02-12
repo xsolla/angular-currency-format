@@ -1686,8 +1686,16 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
     "TRY": {
       "name": "Turkish Lira",
       "fractionSize": 2,
-      "symbol": null,
-      "uniqSymbol": null
+      "symbol": {
+        "grapheme": "₺",
+        "template": "$1",
+        "rtl": false
+      },
+      "uniqSymbol": {
+        "grapheme": "₺",
+        "template": "$1",
+        "rtl": false
+      }
     },
     "TTD": {
       "name": "Trinidad nd Tobago Dollar",
