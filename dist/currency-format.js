@@ -372,12 +372,12 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
       "fractionSize": 2,
       "symbol": {
         "grapheme": "元",
-        "template": "$1",
+        "template": "1 $",
         "rtl": false
       },
       "uniqSymbol": {
         "grapheme": "元",
-        "template": "$1",
+        "template": "1 $",
         "rtl": false
       }
     },
