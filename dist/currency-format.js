@@ -1698,7 +1698,7 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
       }
     },
     "TTD": {
-      "name": "Trinidad nd Tobago Dollar",
+      "name": "Trinidad and Tobago Dollar",
       "fractionSize": 2,
       "symbol": {
         "grapheme": "TT$",
@@ -1906,7 +1906,7 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
       "uniqSymbol": null
     },
     "XUA": {
-      "name": "ADB Unit of ccount",
+      "name": "ADB Unit of Account",
       "fractionSize": 0,
       "symbol": null,
       "uniqSymbol": null
