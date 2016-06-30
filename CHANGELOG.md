@@ -1,8 +1,8 @@
 # Changelog
 
-## 1.0.3 - 2016-06-29
+## 1.0.3 - 2016-06-30
 
-- [feature] Add symbol template for new Belarussian Ruble (BYN). Remove (set null) uniqSymbol for Belarussian Ruble (BYR).
+- [feature] Add symbol template for new Belarussian Ruble (BYN).
 
 - [fix] Fixed some names of currencies.
 
