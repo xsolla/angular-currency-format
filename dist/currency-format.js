@@ -285,7 +285,11 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
         "template": "1 $",
         "rtl": false
       },
-      "uniqSymbol": null
+      "uniqSymbol": {
+        "grapheme": "р.",
+        "template": "1 $",
+        "rtl": false
+      }
     },
     "BYR": {
       "name": "Belarussian Ruble",
@@ -295,7 +299,11 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
         "template": "1 $",
         "rtl": false
       },
-      "uniqSymbol": null
+      "uniqSymbol": {
+        "grapheme": "р.",
+        "template": "1 $",
+        "rtl": false
+      }
     },
     "BZD": {
       "name": "Belize Dollar",
