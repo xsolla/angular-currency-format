@@ -7,7 +7,7 @@
   "license": "MIT",
   "devDependencies": {
     "browser-sync": "2.6.9",
-    "currency-format": "git://github.com/xsolla/currency-format.git#change_BYR_BYN",
+    "currency-format": "1.0.6",
     "del": "1.1.1",
     "gulp": "3.9.0",
     "gulp-concat": "2.5.2",
