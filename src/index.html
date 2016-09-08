@@ -7,15 +7,22 @@
     <script src="bower_components/angular-currency-format/dist/currency-format.js"></script>
     <script>
         angular.module('app', ['currencyFormat'])
-                .controller('currencyCtrl', ['$scope', 'currencyFormatService', function ($scope, currencyFormatService) {
+                .controller('currencyCtrl', ['$scope', '$rootScope', 'currencyFormatService', function ($scope, $rootScope, currencyFormatService) {
                     $scope.amount = -1234.567;
                     $scope.selectedCurrencyCode = 'USD';
                     $scope.fractionSize = 0;
 
-                    $scope.currencies = currencyFormatService.getAll();
+                    $scope.currencies = currencyFormatService.getCurrencies();
+                    $scope.languages = currencyFormatService.getLanguages();
+
+                    $rootScope.language = 'th';
 
                     $scope.$watchCollection('[amount, selectedCurrencyCode, fractionSize]', function () {
                         $scope.currencyInfo = currencyFormatService.getByCode($scope.selectedCurrencyCode);
+                    });
+
+                    $rootScope.$watch('language', function () {
+                        $scope.amount = $scope.amount + 1;
                     });
                 }]);
     </script>
@@ -27,6 +34,9 @@
             {{code}}: {{currency.name}} {{!!currency.uniqSymbol && !!currency.uniqSymbol.grapheme ? '(' +
             currency.uniqSymbol.grapheme + ')': ''}}
         </option>
+    </select>
+    <select ng-model="$root.language">
+        <option ng-repeat="(code, delimiters) in languages" value="{{code}}">{{code}}</option>
     </select>
     <br>
     <br>

@@ -1980,6 +1980,80 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
       "uniqSymbol": null
     }
   };
+  var languages = {
+    "cn": {
+      "decimal": ".",
+      "thousands": ","
+    },
+    "cs": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "de": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "en": {
+      "decimal": ".",
+      "thousands": ","
+    },
+    "es": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "et": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "fi": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "fr": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "hu": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "it": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "ja": {
+      "decimal": ".",
+      "thousands": ","
+    },
+    "nl": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "pl": {
+      "decimal": ".",
+      "thousands": " "
+    },
+    "pt": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "ru": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "sk": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "th": {
+      "decimal": ".",
+      "thousands": ","
+    },
+    "tr": {
+      "decimal": ",",
+      "thousands": "."
+    }
+  };
   return {
     getByCode: function(code) {
       if (!code) {
@@ -1987,12 +2061,21 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
       }
       return currencies[code.toUpperCase()];
     },
-    getAll: function() {
+    getCurrencies: function() {
       return currencies;
+    },
+    getLanguageByCode: function(code) {
+      if (!code) {
+        return;
+      }
+      return languages[code.toLocaleLowerCase()];
+    },
+    getLanguages: function() {
+      return languages;
     }
   };
 }]);
-angular.module('currencyFormat', ['currencyFormat.iso']).filter('currencyFormat', ['$filter', '$sce', 'currencyFormatService', function($filter, $sce, currencyFormatService) {
+angular.module('currencyFormat', ['currencyFormat.iso']).filter('currencyFormat', ['$rootScope', '$filter', '$sce', 'currencyFormatService', function($rootScope, $filter, $sce, currencyFormatService) {
   return function(amount, currencyCode) {
     var fractionSize = arguments[2] !== (void 0) ? arguments[2] : null;
     var useUniqSymbol = arguments[3] !== (void 0) ? arguments[3] : true;
@@ -2001,17 +2084,26 @@ angular.module('currencyFormat', ['currencyFormat.iso']).filter('currencyFormat'
     }
     var formattedCurrency,
         currency = currencyFormatService.getByCode(currencyCode),
-        formatedAmount = String($filter('number')(Math.abs(amount), (Number(fractionSize) == fractionSize && Number(fractionSize) % 1 === 0) ? Number(fractionSize) : (!!currency ? currency.fractionSize : 2))),
+        formatedAmount = Math.abs(amount),
         signAmount = amount < 0 ? '-' : '',
         rtl = false;
+    var currentFractionSize = currency.fractionSize;
+    if (fractionSize !== null) {
+      currentFractionSize = fractionSize;
+    }
+    formatedAmount = formatedAmount.toFixed(currentFractionSize);
+    var languageCode = $rootScope.language || 'en',
+        language = currencyFormatService.getLanguageByCode(languageCode);
+    formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + language.thousands);
+    formatedAmount = formatedAmount.split('.').join(language.decimal);
     if (!!currency && !useUniqSymbol && !!currency.symbol && !!currency.symbol.template) {
-      formattedCurrency = currency.symbol.template.replace("1", formatedAmount);
-      formattedCurrency = formattedCurrency.replace("$", currency.symbol.grapheme);
+      formattedCurrency = currency.symbol.template.replace('1', formatedAmount);
+      formattedCurrency = formattedCurrency.replace('$', currency.symbol.grapheme);
       formattedCurrency = signAmount + formattedCurrency;
       rtl = !!currency.symbol.rtl;
     } else if (!!currency && !!useUniqSymbol && !!currency.uniqSymbol && !!currency.uniqSymbol.template) {
-      formattedCurrency = currency.uniqSymbol.template.replace("1", formatedAmount);
-      formattedCurrency = formattedCurrency.replace("$", currency.uniqSymbol.grapheme);
+      formattedCurrency = currency.uniqSymbol.template.replace('1', formatedAmount);
+      formattedCurrency = formattedCurrency.replace('$', currency.uniqSymbol.grapheme);
       formattedCurrency = signAmount + formattedCurrency;
       rtl = !!currency.uniqSymbol.rtl;
     } else {

@@ -7,19 +7,22 @@ var browserSync = require('browser-sync').create();
 var del = require('del');
 var runSequence = require('run-sequence').use(gulp);
 
-var includeJSON = JSON.stringify(require('./node_modules/currency-format/currency-format.json'));
+var includeCurrencyFormat = JSON.stringify(require('./node_modules/currency-format/currency-format.json'));
+var includeNumeralFormat = JSON.stringify(require('./node_modules/currency-format/numeral-format.json'));
 var jsPaths = ['src/currency-format.service.js', 'src/currency-format.filter.js'];
 
 gulp.task('build-js', function () {
     gulp.src(jsPaths)
         .pipe(concat('currency-format.js'))
-        .pipe(replace('@@includeJSON', includeJSON))
+        .pipe(replace('@@includeCurrencyFormat', includeCurrencyFormat))
+        .pipe(replace('@@includeNumeralFormat', includeNumeralFormat))
         .pipe(traceur())
         .pipe(gulp.dest('dist/'));
 
     gulp.src(jsPaths)
         .pipe(concat('currency-format.min.js'))
-        .pipe(replace('@@includeJSON', includeJSON))
+        .pipe(replace('@@includeCurrencyFormat', includeCurrencyFormat))
+        .pipe(replace('@@includeNumeralFormat', includeNumeralFormat))
         .pipe(traceur())
         .pipe(uglify())
         .pipe(gulp.dest('dist/'));
@@ -33,7 +36,8 @@ gulp.task('vendor', function () {
 gulp.task('js', function () {
     return gulp.src(jsPaths)
         .pipe(concat('currency-format.js'))
-        .pipe(replace('@@includeJSON', includeJSON))
+        .pipe(replace('@@includeCurrencyFormat', includeCurrencyFormat))
+        .pipe(replace('@@includeNumeralFormat', includeNumeralFormat))
         .pipe(traceur())
         .pipe(gulp.dest('.tmp/bower_components/angular-currency-format/dist/'));
 });
