@@ -42,7 +42,7 @@ angular.module('currencyFormat.iso', [])
                     return;
                 }
 
-                return languages[code.toLocaleLowerCase()];
+                return languages[code.toLocaleLowerCase()] || 'en';
             },
 
             /**

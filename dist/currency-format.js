@@ -2068,7 +2068,7 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
       if (!code) {
         return;
       }
-      return languages[code.toLocaleLowerCase()];
+      return languages[code.toLocaleLowerCase()] || 'en';
     },
     getLanguages: function() {
       return languages;
