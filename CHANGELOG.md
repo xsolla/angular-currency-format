@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4 - 2016-09-08
+
+- [feature] Add formatting numeral string: decimal, thousands.
+
 ## 1.0.3 - 2016-06-30
 
 - [feature] Add symbol template for new Belarussian Ruble (BYN).

@@ -15,13 +15,13 @@
                     $scope.currencies = currencyFormatService.getCurrencies();
                     $scope.languages = currencyFormatService.getLanguages();
 
-                    $rootScope.language = 'ru';
+                    $rootScope.currencyLanguage = 'ru';
 
                     $scope.$watchCollection('[amount, selectedCurrencyCode, fractionSize]', function () {
                         $scope.currencyInfo = currencyFormatService.getByCode($scope.selectedCurrencyCode);
                     });
 
-                    $rootScope.$watch('language', function () {
+                    $rootScope.$watch('currencyLanguage', function () {
                         $scope.amount = $scope.amount + 1;
                     });
                 }]);

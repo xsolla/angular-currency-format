@@ -2092,7 +2092,7 @@ angular.module('currencyFormat', ['currencyFormat.iso']).filter('currencyFormat'
       currentFractionSize = fractionSize;
     }
     formatedAmount = formatedAmount.toFixed(currentFractionSize);
-    var languageCode = $rootScope.language || 'en',
+    var languageCode = $rootScope.currencyLanguage || 'en',
         language = currencyFormatService.getLanguageByCode(languageCode);
     formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + language.thousands);
     formatedAmount = formatedAmount.split('.').join(language.decimal);

@@ -1,6 +1,6 @@
 # Angular Currency Format
 
-[![Bower version](https://badge.fury.io/bo/angular-currency-format.svg)](https://badge.fury.io/bo/angular-currency-format)
+[![npm version](https://badge.fury.io/js/angular-currency-format.svg)](https://badge.fury.io/js/angular-currency-format) [![bower version](https://badge.fury.io/bo/angular-currency-format.svg)](https://badge.fury.io/bo/angular-currency-format)
 
 This project is module for AngularJS. It provides:
 
@@ -34,7 +34,7 @@ In the factory there are two methods that return information about the currencie
 angular.module('myApp')
   .controller('MyCtrl', function (currencyFormatService) {
     // Get the information about the currencies
-    console.log(currencyFormatService.getAll());
+    console.log(currencyFormatService.getCurrencies());
     // outputs:
     // {
     //    'AMD': {
@@ -102,6 +102,18 @@ Information about currencies is an object which has the structure:
 
 Symbol/uniqSymbol field is `null`, when the currency has no symbol/alternative symbol. 
 
+Information about languages is an object which has the structure:
+
+```javascript
+{
+    "en": {
+        "decimal": ".",
+        "thousands": ","
+    },
+    ...
+}
+```
+
 ### Filter
 
 Instead of directly using the currency symbol, you only need the 3 char long currency code (e.g. USD or JPY).
@@ -111,6 +123,8 @@ It will take the right symbol, format and fraction size. The fraction can be set
 // in controller
 $scope.amount = -1234.56;
 $scope.isoCode = 'USD';
+$rootScope.currencyLanguage = 'ru';
+    
 
 // in template
 {{ amount | currencyFormat:isoCode }} // -$1,234.56
@@ -121,7 +135,7 @@ If there is no currency symbol, then the filter will return the value in the fol
 
 ## Currency reference
 
-The component uses the JSON with currencies information from https://github.com/xsolla/currency-format.
+The component uses the JSON with currencies and languages information from https://github.com/xsolla/currency-format.
 
 The list of currency codes was taken from https://en.wikipedia.org/wiki/ISO_4217.
 
