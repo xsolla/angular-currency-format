@@ -4,7 +4,7 @@ angular.module('currencyFormat.iso', [])
     .factory('currencyFormatService', ['$filter', function ($filter) {
 
         var currencies = @@includeCurrencyFormat; // Include displayFormatCurrency JSON using Gulp
-        var languages = @@includeNumeralFormat; // Include displayFormatCurrency JSON using Gulp
+        var languages = @@includeCurrencyNumberFormat; // Include displayFormatCurrency JSON using Gulp
 
         return {
 

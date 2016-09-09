@@ -1981,6 +1981,14 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
     }
   };
   var languages = {
+    "ar": {
+      "decimal": ".",
+      "thousands": ","
+    },
+    "bg": {
+      "decimal": ".",
+      "thousands": ","
+    },
     "cn": {
       "decimal": ".",
       "thousands": ","
@@ -2013,6 +2021,10 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
       "decimal": ",",
       "thousands": " "
     },
+    "he": {
+      "decimal": ",",
+      "thousands": " "
+    },
     "hu": {
       "decimal": ",",
       "thousands": " "
@@ -2022,6 +2034,10 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
       "thousands": "."
     },
     "ja": {
+      "decimal": ".",
+      "thousands": ","
+    },
+    "ko": {
       "decimal": ".",
       "thousands": ","
     },
@@ -2037,6 +2053,10 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
       "decimal": ",",
       "thousands": " "
     },
+    "ro": {
+      "decimal": ",",
+      "thousands": "."
+    },
     "ru": {
       "decimal": ",",
       "thousands": " "
@@ -2050,6 +2070,14 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
       "thousands": ","
     },
     "tr": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "tw": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "vi": {
       "decimal": ",",
       "thousands": "."
     }
