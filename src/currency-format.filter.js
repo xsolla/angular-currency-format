@@ -37,8 +37,8 @@ angular.module('currencyFormat', ['currencyFormat.iso'])
             var languageCode = $rootScope.currencyLanguage || 'en',
                 language = currencyFormatService.getLanguageByCode(languageCode);
 
-            formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + language.thousands);
             formatedAmount = formatedAmount.split('.').join(language.decimal);
+            formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + language.thousands);
 
             // Format currency
 

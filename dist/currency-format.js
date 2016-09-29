@@ -2122,8 +2122,8 @@ angular.module('currencyFormat', ['currencyFormat.iso']).filter('currencyFormat'
     formatedAmount = formatedAmount.toFixed(currentFractionSize);
     var languageCode = $rootScope.currencyLanguage || 'en',
         language = currencyFormatService.getLanguageByCode(languageCode);
-    formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + language.thousands);
     formatedAmount = formatedAmount.split('.').join(language.decimal);
+    formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + language.thousands);
     if (!!currency && !useUniqSymbol && !!currency.symbol && !!currency.symbol.template) {
       formattedCurrency = currency.symbol.template.replace('1', formatedAmount);
       formattedCurrency = formattedCurrency.replace('$', currency.symbol.grapheme);
