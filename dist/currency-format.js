@@ -1981,105 +1981,105 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
     }
   };
   var languages = {
-    "ar": {
+    "ar_AE": {
       "decimal": ".",
       "thousands": ","
     },
-    "bg": {
+    "bg_BG": {
       "decimal": ".",
       "thousands": ","
     },
-    "cn": {
+    "cs_CZ": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "de_DE": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "en_US": {
       "decimal": ".",
       "thousands": ","
     },
-    "cs": {
+    "es_ES": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "et_EE": {
       "decimal": ",",
       "thousands": " "
     },
-    "de": {
+    "fi_FI": {
       "decimal": ",",
       "thousands": " "
     },
-    "en": {
+    "fr_FR": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "he_IL": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "hu_HU": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "it_IT": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "ja_JP": {
       "decimal": ".",
       "thousands": ","
     },
-    "es": {
-      "decimal": ",",
-      "thousands": "."
-    },
-    "et": {
-      "decimal": ",",
-      "thousands": " "
-    },
-    "fi": {
-      "decimal": ",",
-      "thousands": " "
-    },
-    "fr": {
-      "decimal": ",",
-      "thousands": " "
-    },
-    "he": {
-      "decimal": ",",
-      "thousands": " "
-    },
-    "hu": {
-      "decimal": ",",
-      "thousands": " "
-    },
-    "it": {
-      "decimal": ",",
-      "thousands": "."
-    },
-    "ja": {
+    "ko_KR": {
       "decimal": ".",
       "thousands": ","
     },
-    "ko": {
+    "nl_NL": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "pl_PL": {
+      "decimal": ".",
+      "thousands": " "
+    },
+    "pt_PT": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "ro_RO": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "ru_RU": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "sk_SK": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "th_TH": {
       "decimal": ".",
       "thousands": ","
     },
-    "nl": {
+    "tr_TR": {
       "decimal": ",",
       "thousands": "."
     },
-    "pl": {
-      "decimal": ".",
-      "thousands": " "
-    },
-    "pt": {
-      "decimal": ",",
-      "thousands": " "
-    },
-    "ro": {
+    "vi_VN": {
       "decimal": ",",
       "thousands": "."
     },
-    "ru": {
+    "zh_TW": {
       "decimal": ",",
-      "thousands": " "
+      "thousands": "."
     },
-    "sk": {
-      "decimal": ",",
-      "thousands": " "
-    },
-    "th": {
+    "zh_CN": {
       "decimal": ".",
       "thousands": ","
-    },
-    "tr": {
-      "decimal": ",",
-      "thousands": "."
-    },
-    "tw": {
-      "decimal": ",",
-      "thousands": "."
-    },
-    "vi": {
-      "decimal": ",",
-      "thousands": "."
     }
   };
   return {
@@ -2096,7 +2096,8 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
       if (!code) {
         return;
       }
-      return languages[code.toLocaleLowerCase()] || 'en';
+      code = [code.substr(0, 2).toLowerCase(), code.substr(3, 2).toUpperCase()].join('_');
+      return languages[code] || 'en_US';
     },
     getLanguages: function() {
       return languages;
@@ -2120,7 +2121,7 @@ angular.module('currencyFormat', ['currencyFormat.iso']).filter('currencyFormat'
       currentFractionSize = fractionSize;
     }
     formatedAmount = formatedAmount.toFixed(currentFractionSize);
-    var languageCode = $rootScope.currencyLanguage || 'en',
+    var languageCode = $rootScope.currencyLanguage || 'en_US',
         language = currencyFormatService.getLanguageByCode(languageCode);
     formatedAmount = formatedAmount.split('.').join(language.decimal);
     formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + language.thousands);

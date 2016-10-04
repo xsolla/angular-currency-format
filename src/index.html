@@ -15,7 +15,7 @@
                     $scope.currencies = currencyFormatService.getCurrencies();
                     $scope.languages = currencyFormatService.getLanguages();
 
-                    $rootScope.currencyLanguage = 'ru';
+                    $rootScope.currencyLanguage = 'ru_RU';
 
                     $scope.$watchCollection('[amount, selectedCurrencyCode, fractionSize]', function () {
                         $scope.currencyInfo = currencyFormatService.getByCode($scope.selectedCurrencyCode);
