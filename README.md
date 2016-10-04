@@ -106,7 +106,7 @@ Information about languages is an object which has the structure:
 
 ```javascript
 {
-    "en": {
+    "en_US": {
         "decimal": ".",
         "thousands": ","
     },
@@ -123,7 +123,7 @@ It will take the right symbol, format and fraction size. The fraction can be set
 // in controller
 $scope.amount = -1234.56;
 $scope.isoCode = 'USD';
-$rootScope.currencyLanguage = 'ru';
+$rootScope.currencyLanguage = 'ru_RU';
     
 
 // in template
