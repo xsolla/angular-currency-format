@@ -1980,6 +1980,108 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
       "uniqSymbol": null
     }
   };
+  var languages = {
+    "ar_AE": {
+      "decimal": ".",
+      "thousands": ","
+    },
+    "bg_BG": {
+      "decimal": ".",
+      "thousands": ","
+    },
+    "cs_CZ": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "de_DE": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "en_US": {
+      "decimal": ".",
+      "thousands": ","
+    },
+    "es_ES": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "et_EE": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "fi_FI": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "fr_FR": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "he_IL": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "hu_HU": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "it_IT": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "ja_JP": {
+      "decimal": ".",
+      "thousands": ","
+    },
+    "ko_KR": {
+      "decimal": ".",
+      "thousands": ","
+    },
+    "nl_NL": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "pl_PL": {
+      "decimal": ".",
+      "thousands": " "
+    },
+    "pt_PT": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "ro_RO": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "ru_RU": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "sk_SK": {
+      "decimal": ",",
+      "thousands": " "
+    },
+    "th_TH": {
+      "decimal": ".",
+      "thousands": ","
+    },
+    "tr_TR": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "vi_VN": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "zh_TW": {
+      "decimal": ",",
+      "thousands": "."
+    },
+    "zh_CN": {
+      "decimal": ".",
+      "thousands": ","
+    }
+  };
   return {
     getByCode: function(code) {
       if (!code) {
@@ -1987,12 +2089,22 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
       }
       return currencies[code.toUpperCase()];
     },
-    getAll: function() {
+    getCurrencies: function() {
       return currencies;
+    },
+    getLanguageByCode: function(code) {
+      if (!code) {
+        return;
+      }
+      code = [code.substr(0, 2).toLowerCase(), code.substr(3, 2).toUpperCase()].join('_');
+      return languages[code] || 'en_US';
+    },
+    getLanguages: function() {
+      return languages;
     }
   };
 }]);
-angular.module('currencyFormat', ['currencyFormat.iso']).filter('currencyFormat', ['$filter', '$sce', 'currencyFormatService', function($filter, $sce, currencyFormatService) {
+angular.module('currencyFormat', ['currencyFormat.iso']).filter('currencyFormat', ['$rootScope', '$filter', '$sce', 'currencyFormatService', function($rootScope, $filter, $sce, currencyFormatService) {
   return function(amount, currencyCode) {
     var fractionSize = arguments[2] !== (void 0) ? arguments[2] : null;
     var useUniqSymbol = arguments[3] !== (void 0) ? arguments[3] : true;
@@ -2001,17 +2113,26 @@ angular.module('currencyFormat', ['currencyFormat.iso']).filter('currencyFormat'
     }
     var formattedCurrency,
         currency = currencyFormatService.getByCode(currencyCode),
-        formatedAmount = String($filter('number')(Math.abs(amount), (Number(fractionSize) == fractionSize && Number(fractionSize) % 1 === 0) ? Number(fractionSize) : (!!currency ? currency.fractionSize : 2))),
+        formatedAmount = Math.abs(amount),
         signAmount = amount < 0 ? '-' : '',
         rtl = false;
+    var currentFractionSize = currency.fractionSize;
+    if (fractionSize !== null) {
+      currentFractionSize = fractionSize;
+    }
+    formatedAmount = formatedAmount.toFixed(currentFractionSize);
+    var languageCode = $rootScope.currencyLanguage || 'en_US',
+        language = currencyFormatService.getLanguageByCode(languageCode);
+    formatedAmount = formatedAmount.split('.').join(language.decimal);
+    formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + language.thousands);
     if (!!currency && !useUniqSymbol && !!currency.symbol && !!currency.symbol.template) {
-      formattedCurrency = currency.symbol.template.replace("1", formatedAmount);
-      formattedCurrency = formattedCurrency.replace("$", currency.symbol.grapheme);
+      formattedCurrency = currency.symbol.template.replace('1', formatedAmount);
+      formattedCurrency = formattedCurrency.replace('$', currency.symbol.grapheme);
       formattedCurrency = signAmount + formattedCurrency;
       rtl = !!currency.symbol.rtl;
     } else if (!!currency && !!useUniqSymbol && !!currency.uniqSymbol && !!currency.uniqSymbol.template) {
-      formattedCurrency = currency.uniqSymbol.template.replace("1", formatedAmount);
-      formattedCurrency = formattedCurrency.replace("$", currency.uniqSymbol.grapheme);
+      formattedCurrency = currency.uniqSymbol.template.replace('1', formatedAmount);
+      formattedCurrency = formattedCurrency.replace('$', currency.uniqSymbol.grapheme);
       formattedCurrency = signAmount + formattedCurrency;
       rtl = !!currency.uniqSymbol.rtl;
     } else {

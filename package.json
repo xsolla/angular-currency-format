@@ -1,6 +1,6 @@
 {
   "name": "angular-currency-format",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "AngularJS service (factory) that retrieves currency information (name, symbol, fraction and formating) according to ISO 4217 currency codes. And a filter to print formatted currency.",
   "author": "Aleksey Pikhtovnikov <a.pihtovnikov@xsolla.com>",
   "repository": "git@github.com:xsolla/angular-currency-format.git",
@@ -8,6 +8,7 @@
   "devDependencies": {
     "browser-sync": "2.6.9",
     "currency-format": "1.0.6",
+    "currency-number-format": "1.1.0",
     "del": "1.1.1",
     "gulp": "3.9.0",
     "gulp-concat": "2.5.2",
