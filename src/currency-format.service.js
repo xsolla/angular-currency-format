@@ -19,7 +19,22 @@ angular.module('currencyFormat.iso', [])
                     return;
                 }
 
-                return currencies[code.toUpperCase()];
+                var currency = currencies[code.toUpperCase()];
+
+                if (!currency) {
+                    currency = {
+                        "name": code,
+                        "fractionSize": 2,
+                        "symbol": {
+                            "grapheme": code,
+                            "template": null,
+                            "rtl": false
+                        },
+                        "uniqSymbol": null
+                    };
+                }
+
+                return currency;
             },
 
             /**
