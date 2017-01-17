@@ -279,7 +279,7 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
     },
     "BYN": {
       "name": "Belarussian Ruble",
-      "fractionSize": 0,
+      "fractionSize": 2,
       "symbol": {
         "grapheme": "p.",
         "template": "1 $",
@@ -348,16 +348,8 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
     "CHF": {
       "name": "Swiss Franc",
       "fractionSize": 2,
-      "symbol": {
-        "grapheme": "CHF",
-        "template": "$1",
-        "rtl": false
-      },
-      "uniqSymbol": {
-        "grapheme": "CHF",
-        "template": "$1",
-        "rtl": false
-      }
+      "symbol": null,
+      "uniqSymbol": null
     },
     "CHW": {
       "name": "WIR Franc",
@@ -1343,12 +1335,12 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
       "name": "Nuevo Sol",
       "fractionSize": 2,
       "symbol": {
-        "grapheme": "S/.",
+        "grapheme": "S/",
         "template": "$1",
         "rtl": false
       },
       "uniqSymbol": {
-        "grapheme": "S/.",
+        "grapheme": "S/",
         "template": "$1",
         "rtl": false
       }
