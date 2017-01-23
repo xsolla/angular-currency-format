@@ -2,6 +2,8 @@
 
 ## 1.0.5 - 2017-01-17
 
+- [fix] Fixed fraction size for IDR.
+
 - [fix] Updated grapheme for PEN.
 
 - [fix] Removed grapheme for CHF.

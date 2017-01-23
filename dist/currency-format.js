@@ -739,7 +739,7 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
     },
     "IDR": {
       "name": "Rupiah",
-      "fractionSize": 3,
+      "fractionSize": 2,
       "symbol": {
         "grapheme": "Rp",
         "template": "$1",
