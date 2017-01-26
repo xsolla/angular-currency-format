@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.5 - 2017-01-26
+
+- [fix] Fixed fraction size for IDR.
+
+- [fix] Updated grapheme for PEN.
+
+- [fix] Removed grapheme for CHF.
+
+- [fix] Fixed fraction size for BYN.
+
 ## 1.0.4 - 2016-09-08
 
 - [feature] Add formatting numeral string: decimal, thousands.
