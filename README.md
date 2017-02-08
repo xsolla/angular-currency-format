@@ -54,7 +54,7 @@ angular.module('myApp')
     //    ...
     // }
 
-    // Get the information about currency be ISO 4217 currency code
+    // Get the information about currency by ISO 4217 currency code
     console.log(currencyFormatService.getByCode('EUR'));
     // outputs:
     // {
@@ -69,6 +69,28 @@ angular.module('myApp')
     //        'grapheme': '€',
     //        'template': '$1',
     //        'rtl': false
+    //    }
+    // }
+    
+    // Get the information about the delimiters
+    console.log(currencyFormatService.getLanguages());
+    // outputs:
+    // {
+    //    'ar_AE': {
+    //        'decimal': '.',
+    //        'thousands': ','
+    //    },
+    //    ...
+    // }
+
+    // Get the information about the delimiters by locale ID
+    console.log(currencyFormatService.getLanguageByCode('en_US'));
+    // outputs:
+    // {
+    // {
+    //    'en_US': {
+    //        'decimal': '.',
+    //        'thousands': ','
     //    }
     // }
   });
@@ -106,9 +128,9 @@ Information about languages is an object which has the structure:
 
 ```javascript
 {
-    "en_US": {
-        "decimal": ".",
-        "thousands": ","
+    "en_US": {                      // Locale ID
+        "decimal": ".",             // Decimal delimiter
+        "thousands": ","            // Thousands delimiter
     },
     ...
 }
@@ -123,12 +145,12 @@ It will take the right symbol, format and fraction size. The fraction can be set
 // in controller
 $scope.amount = -1234.56;
 $scope.isoCode = 'USD';
-$rootScope.currencyLanguage = 'ru_RU';
-    
+$rootScope.currencyLanguage = 'en_US'; // Can be set through the parameter of the filter. Default 'en_US'.    
 
 // in template
 {{ amount | currencyFormat:isoCode }} // -$1,234.56
 {{ amount | currencyFormat:isoCode:0 }} // -$1,235
+{{ amount | currencyFormat:'RUR':null:true:'ru_RU' }} // -1 234,56 ₽
 ```
 
 If there is no currency symbol, then the filter will return the value in the following format: formated amount + ISO code. For example `-1,234.56 USD`.

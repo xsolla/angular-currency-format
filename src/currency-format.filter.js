@@ -10,9 +10,10 @@ angular.module('currencyFormat', ['currencyFormat.iso'])
          * @param string currencyCode e.g. EUR, USD
          * @param number fractionSize User specified fraction size that overwrites default value
          * @param boolean useUniqSymbol use unique currency symbol
+         * @param string localeId e.g. ru_RU, default en_US
          * @return string
          */
-        return function (amount, currencyCode, fractionSize = null, useUniqSymbol = true) {
+        return function (amount, currencyCode, fractionSize = null, useUniqSymbol = true, localeId = null) {
             if (!currencyCode || Number(amount) != amount) {
                 return;
             }
@@ -32,13 +33,13 @@ angular.module('currencyFormat', ['currencyFormat.iso'])
 
             formatedAmount = formatedAmount.toFixed(currentFractionSize);
 
-            // Format numeral by language
+            // Format numeral by locale ID
 
-            var languageCode = $rootScope.currencyLanguage || 'en_US',
-                language = currencyFormatService.getLanguageByCode(languageCode);
+            localeId = localeId ? localeId : ($rootScope.currencyLanguage || 'en_US');
+            var languageOptions = currencyFormatService.getLanguageByCode(localeId);
 
-            formatedAmount = formatedAmount.split('.').join(language.decimal);
-            formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + language.thousands);
+            formatedAmount = formatedAmount.split('.').join(languageOptions.decimal);
+            formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languageOptions.thousands);
 
             // Format currency
 

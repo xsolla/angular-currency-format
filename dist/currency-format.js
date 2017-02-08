@@ -1,5 +1,5 @@
 "use strict";
-angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$filter', function($filter) {
+angular.module('currencyFormat.iso', []).factory('currencyFormatService', [function() {
   var currencies = {
     "AED": {
       "name": "UAE Dirham",
@@ -2102,7 +2102,7 @@ angular.module('currencyFormat.iso', []).factory('currencyFormatService', ['$fil
         return;
       }
       code = [code.substr(0, 2).toLowerCase(), code.substr(3, 2).toUpperCase()].join('_');
-      return languages[code] || 'en_US';
+      return languages[code] || languages['en_US'];
     },
     getLanguages: function() {
       return languages;
@@ -2113,6 +2113,7 @@ angular.module('currencyFormat', ['currencyFormat.iso']).filter('currencyFormat'
   return function(amount, currencyCode) {
     var fractionSize = arguments[2] !== (void 0) ? arguments[2] : null;
     var useUniqSymbol = arguments[3] !== (void 0) ? arguments[3] : true;
+    var localeId = arguments[4] !== (void 0) ? arguments[4] : null;
     if (!currencyCode || Number(amount) != amount) {
       return;
     }
@@ -2126,10 +2127,10 @@ angular.module('currencyFormat', ['currencyFormat.iso']).filter('currencyFormat'
       currentFractionSize = fractionSize;
     }
     formatedAmount = formatedAmount.toFixed(currentFractionSize);
-    var languageCode = $rootScope.currencyLanguage || 'en_US',
-        language = currencyFormatService.getLanguageByCode(languageCode);
-    formatedAmount = formatedAmount.split('.').join(language.decimal);
-    formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + language.thousands);
+    localeId = localeId ? localeId : ($rootScope.currencyLanguage || 'en_US');
+    var languageOptions = currencyFormatService.getLanguageByCode(localeId);
+    formatedAmount = formatedAmount.split('.').join(languageOptions.decimal);
+    formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languageOptions.thousands);
     if (!!currency && !useUniqSymbol && !!currency.symbol && !!currency.symbol.template) {
       formattedCurrency = currency.symbol.template.replace('1', formatedAmount);
       formattedCurrency = formattedCurrency.replace('$', currency.symbol.grapheme);
