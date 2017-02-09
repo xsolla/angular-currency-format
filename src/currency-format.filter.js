@@ -11,9 +11,10 @@ angular.module('currencyFormat', ['currencyFormat.iso'])
          * @param number fractionSize User specified fraction size that overwrites default value
          * @param boolean useUniqSymbol use unique currency symbol
          * @param string localeId e.g. ru_RU, default en_US
+         * @param boolean onlyAmount Retrieve amount only
          * @return string
          */
-        return function (amount, currencyCode, fractionSize = null, useUniqSymbol = true, localeId = null) {
+        return function (amount, currencyCode, fractionSize = null, useUniqSymbol = true, localeId = null, onlyAmount = false) {
             if (!currencyCode || Number(amount) != amount) {
                 return;
             }
@@ -43,7 +44,9 @@ angular.module('currencyFormat', ['currencyFormat.iso'])
 
             // Format currency
 
-            if (!!currency && !useUniqSymbol && !!currency.symbol && !!currency.symbol.template) {
+            if (onlyAmount) {
+                formattedCurrency = signAmount + formatedAmount;
+            } else if (!!currency && !useUniqSymbol && !!currency.symbol && !!currency.symbol.template) {
                 formattedCurrency = currency.symbol.template.replace('1', formatedAmount);
                 formattedCurrency = formattedCurrency.replace('$', currency.symbol.grapheme);
                 formattedCurrency = signAmount + formattedCurrency;
