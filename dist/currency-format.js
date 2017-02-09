@@ -2114,6 +2114,7 @@ angular.module('currencyFormat', ['currencyFormat.iso']).filter('currencyFormat'
     var fractionSize = arguments[2] !== (void 0) ? arguments[2] : null;
     var useUniqSymbol = arguments[3] !== (void 0) ? arguments[3] : true;
     var localeId = arguments[4] !== (void 0) ? arguments[4] : null;
+    var onlyAmount = arguments[5] !== (void 0) ? arguments[5] : false;
     if (!currencyCode || Number(amount) != amount) {
       return;
     }
@@ -2131,7 +2132,9 @@ angular.module('currencyFormat', ['currencyFormat.iso']).filter('currencyFormat'
     var languageOptions = currencyFormatService.getLanguageByCode(localeId);
     formatedAmount = formatedAmount.split('.').join(languageOptions.decimal);
     formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languageOptions.thousands);
-    if (!!currency && !useUniqSymbol && !!currency.symbol && !!currency.symbol.template) {
+    if (onlyAmount) {
+      formattedCurrency = signAmount + formatedAmount;
+    } else if (!!currency && !useUniqSymbol && !!currency.symbol && !!currency.symbol.template) {
       formattedCurrency = currency.symbol.template.replace('1', formatedAmount);
       formattedCurrency = formattedCurrency.replace('$', currency.symbol.grapheme);
       formattedCurrency = signAmount + formattedCurrency;
