@@ -10,19 +10,18 @@
                 .controller('currencyCtrl', ['$scope', '$rootScope', 'currencyFormatService', function ($scope, $rootScope, currencyFormatService) {
                     $scope.amount = -1234.567;
                     $scope.selectedCurrencyCode = 'USD';
+                    $scope.selectedCurrencyLocaleId = 'en_US';
                     $scope.fractionSize = 0;
 
                     $scope.currencies = currencyFormatService.getCurrencies();
-                    $scope.languages = currencyFormatService.getLanguages();
+                    $scope.localeIds = currencyFormatService.getLanguages();
 
-                    $rootScope.currencyLanguage = 'ru_RU';
-
-                    $scope.$watchCollection('[amount, selectedCurrencyCode, fractionSize]', function () {
+                    $scope.$watchGroup(['amount', 'selectedCurrencyCode', 'fractionSize'], function () {
                         $scope.currencyInfo = currencyFormatService.getByCode($scope.selectedCurrencyCode);
                     });
 
-                    $rootScope.$watch('currencyLanguage', function () {
-                        $scope.amount = $scope.amount + 1;
+                    $scope.$watch('selectedCurrencyLocaleId', function () {
+                        $scope.formatCurrencyAmount = currencyFormatService.getLanguageByCode($scope.selectedCurrencyLocaleId);
                     });
                 }]);
     </script>
@@ -35,8 +34,10 @@
             currency.uniqSymbol.grapheme + ')': ''}}
         </option>
     </select>
-    <select ng-model="$root.currencyLanguage">
-        <option ng-repeat="(code, delimiters) in languages" value="{{code}}">{{code}}</option>
+    <select ng-model="selectedCurrencyLocaleId">
+        <option ng-repeat="(code, delimiters) in localeIds" value="{{code}}" ng-selected="{{code === selectedCurrencyLocaleId}}">
+            {{code}}
+        </option>
     </select>
     <br>
     <br>
@@ -44,10 +45,14 @@
     <code>{{currencyInfo}}</code>
     <br>
     <br>
+    Format currency amount by locale ID:<br>
+    <code>{{formatCurrencyAmount}}</code>
+    <br>
+    <br>
     Formated currency:<br>
-    <span ng-bind-html="amount | currencyFormat:selectedCurrencyCode"></span><br>
+    <span ng-bind-html="amount | currencyFormat:selectedCurrencyCode:null:true:selectedCurrencyLocaleId"></span><br>
     <br>
     Formated currency with custom fraction size <input type="text" ng-model="fractionSize">:<br>
-    <span ng-bind-html="amount | currencyFormat:selectedCurrencyCode:fractionSize"></span>
+    <span ng-bind-html="amount | currencyFormat:selectedCurrencyCode:fractionSize:true:selectedCurrencyLocaleId"></span>
 </body>
 </html>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('currencyFormat.iso', [])
-    .factory('currencyFormatService', ['$filter', function ($filter) {
+    .factory('currencyFormatService', [function () {
 
         var currencies = @@includeCurrencyFormat; // Include displayFormatCurrency JSON using Gulp
         var languages = @@includeCurrencyNumberFormat; // Include displayFormatCurrency JSON using Gulp
@@ -59,7 +59,7 @@ angular.module('currencyFormat.iso', [])
 
                 code = [code.substr(0, 2).toLowerCase(), code.substr(3, 2).toUpperCase()].join('_');
 
-                return languages[code] || 'en_US';
+                return languages[code] || languages['en_US'];
             },
 
             /**

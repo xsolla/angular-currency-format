@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.6 - 2017-02-14
+
+- [feature] Add parameter localeId to filter currencyFormat.
+
+- [fix] Fix retrieve the default value in currencyFormatService.getLanguageByCode.
+
 ## 1.0.5 - 2017-01-26
 
 - [fix] Fixed fraction size for IDR.
