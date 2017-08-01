@@ -5,6 +5,7 @@
   "author": "Aleksey Pikhtovnikov <a.pihtovnikov@xsolla.com>",
   "repository": "git@github.com:xsolla/angular-currency-format.git",
   "license": "MIT",
+  "main": "index.js",
   "devDependencies": {
     "browser-sync": "2.6.9",
     "currency-format": "1.0.7",
