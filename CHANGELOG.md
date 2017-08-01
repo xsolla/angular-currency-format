@@ -1,4 +1,7 @@
 # Changelog
+## 1.0.7 - 2017-08-01
+
+- [feature] Add main field to package.json
 
 ## 1.0.6 - 2017-02-14
 
