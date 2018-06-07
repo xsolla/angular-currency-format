@@ -2130,8 +2130,12 @@ angular.module('currencyFormat', ['currencyFormat.iso']).filter('currencyFormat'
     formatedAmount = formatedAmount.toFixed(currentFractionSize);
     localeId = localeId ? localeId : ($rootScope.currencyLanguage || 'en_US');
     var languageOptions = currencyFormatService.getLanguageByCode(localeId);
-    formatedAmount = formatedAmount.split('.').join(languageOptions.decimal);
-    formatedAmount = formatedAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languageOptions.thousands);
+    formatedAmount = formatedAmount.split('.').map(function(part, index) {
+      if (index === 0) {
+        return part.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languageOptions.thousands);
+      }
+      return part;
+    }).join(languageOptions.decimal);
     if (onlyAmount) {
       formattedCurrency = signAmount + formatedAmount;
     } else if (!!currency && !useUniqSymbol && !!currency.symbol && !!currency.symbol.template) {
